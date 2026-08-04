@@ -1,3 +1,4 @@
-import App from './App';
+import BotBuilder from './bot-builder';
+import './workspace.scss';
 
-export default App;
+export default BotBuilder;
