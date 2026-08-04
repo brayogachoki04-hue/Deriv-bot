@@ -1,59 +1,49 @@
-/**
- * Internal types for the SmartCharts Champion adapter
- * Re-exports from main types and adds adapter-specific interfaces
- */
-
-import type {
-    ActiveSymbol,
-    ActiveSymbols,
-    SmartchartsChampionAdapter,
-    SmartchartsChampionFunctions,
-    TGetQuotesRequest,
-    TGetQuotesResult,
-    TGranularity,
-    TQuote,
-    TradingTimesMap,
-    TServices,
-    TSubscriptionCallback,
-    TTransport,
-    TUnsubscribeFunction,
-} from '@/types/smartchart.types';
-
-export type {
-    ActiveSymbol,
-    ActiveSymbols,
-    SmartchartsChampionAdapter,
-    SmartchartsChampionFunctions,
-    TGetQuotesRequest,
-    TGetQuotesResult,
-    TGranularity,
-    TQuote,
-    TradingTimesMap,
-    TServices,
-    TSubscriptionCallback,
-    TTransport,
-    TUnsubscribeFunction,
+export type Account = {
+    loginid: string;
+    token: string;
+    currency?: string;
 };
 
-// Internal subscription management
-export interface SubscriptionInfo {
-    id: string;
-    request: TGetQuotesRequest;
-    callback: TSubscriptionCallback;
-    unsubscribe: () => void;
-}
+export type AccountsList = {
+    [key: string]: string;
+};
 
-// Internal transformation utilities
-export interface TransformationUtils {
-    toTGetQuotesResult: (response: any, granularity: TGranularity) => TGetQuotesResult;
-    toTQuoteFromStream: (message: any, granularity: TGranularity) => TQuote;
-    toTradingTimesMap: (source: any) => TradingTimesMap;
-    toActiveSymbols: (source: any) => ActiveSymbols;
-}
+export type ClientAccounts = {
+    [key: string]: Account;
+};
 
-// Adapter configuration options
-export interface AdapterConfig {
-    debug?: boolean;
-    subscriptionTimeout?: number;
-    maxRetries?: number;
-}
+export type ActiveAccount = {
+    currency?: string;
+    loginid: string;
+    token: string;
+};
+
+export type LoginInfo = {
+    currency?: string;
+    loginid: string;
+    token: string;
+};
+
+export type AuthorizeResponse = {
+    authorize?: {
+        account_list: Array<{
+            loginid: string;
+        }>;
+    };
+    error?: unknown;
+};
+
+export type ApiInstance = {
+    authorize: (token: string) => Promise<AuthorizeResponse>;
+    disconnect: () => void;
+};
+
+export type LoginInfoItem = {
+    token: string;
+    loginid: string;
+};
+
+export type LocalStorageToken = {
+    loginInfo: LoginInfoItem[];
+    paramsToDelete: string[];
+};
